@@ -17,7 +17,7 @@ gem 'puma', '~> 5.0'
 gem 'devise'
 gem 'jwt'
 gem 'rspec-rails'
-
+gem 'omniauth'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
