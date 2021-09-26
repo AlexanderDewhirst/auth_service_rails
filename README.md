@@ -30,6 +30,11 @@ Postman allows you to performance test your API with tests. I have run a perform
 90 percentile response time 439.2 is lower than 1000, the number of iterations is 100
 ```
 
+After increasing the iterations to 1000, we have the following output
+```
+90 percentile response time 497.1 is lower than 1000, the number of iterations is 1000
+```
+
 
 ## Current State
 
