@@ -20,7 +20,7 @@ From here, you should be able to start a server (`rails server`) or access the c
 
 The Postman Workspace can be found here: https://app.getpostman.com/join-team?invite_code=1e2b58da56dd3804430ed1f96e165fd5
 
-Clone the repository and spin up a server in your shell using `rails server`. From here, we can hit the API endpoints through Postman or some other method.
+Clone the repository and spin up a server in your shell using `rails server`. From here, we can hit the API endpoints through Postman or some other method. Each request does create a user and you may need to delete local users to successfully run tests.
 
 
 ## Performance Testing
