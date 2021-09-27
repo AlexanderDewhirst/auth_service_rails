@@ -44,3 +44,10 @@ The following actions are currently supported,
 - logout `DELETE /api/logout`
 
 Also, the JWT token is not removed from the client side when deleting a session (i.e. logging out).
+
+
+### Resources
+
+Below is a list of resources
+- https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/
+- 
