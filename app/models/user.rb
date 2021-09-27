@@ -4,7 +4,4 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable
 
-  def generate_jwt
-    JWT.encode({id: id, exp: 15.minutes.from_now.to_i}, ENV['JWT_TOKEN'])
-  end
 end

@@ -18,6 +18,8 @@ gem 'devise'
 gem 'jwt'
 gem 'rspec-rails'
 gem 'omniauth'
+gem 'dry-initializer-rails'
+gem 'dry-types'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -29,6 +31,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 # gem 'rack-cors'
 
 group :development, :test do
+  gem 'factory_bot_rails'
   gem 'dotenv-rails'
   gem 'pry-byebug', '>= 3.7'
   gem 'pry-rails', '>= 0.3'
