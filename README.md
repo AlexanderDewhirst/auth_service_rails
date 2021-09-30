@@ -46,5 +46,6 @@ Also, the JWT token is not removed from the client side when deleting a session 
 ### Resources
 
 Below is a list of resources
+- https://github.com/jwt/ruby-jwt
+- https://github.com/heartcombo/devise
 - https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/
-- 
