@@ -25,15 +25,12 @@ Clone the repository and spin up a server in your shell using `rails server`. Fr
 
 ## Performance Testing
 
-Postman allows you to performance test your API with tests. I have run a performance test for the registration endpoint, `POST /api`, with 100 interations. This performance test is a request in Postman called `Register (performance test)` and has the following performance,
+Postman allows you to performance test your API with tests. I have run a performance test for the registration endpoint, `POST /api`, with 1000 interations. This performance test is a request in Postman called `Register (performance test)` and has the following performance,
 ```
-90 percentile response time 439.2 is lower than 1000, the number of iterations is 100
+50 percentile response time 337 is lower than 1000, the number of iterations is 1000
+90 percentile response time 448 is lower than 1000, the number of iterations is 1000
 ```
 
-After increasing the iterations to 1000, we have the following output
-```
-90 percentile response time 497.1 is lower than 1000, the number of iterations is 1000
-```
 
 
 ## Current State
@@ -49,5 +46,6 @@ Also, the JWT token is not removed from the client side when deleting a session 
 ### Resources
 
 Below is a list of resources
+- https://github.com/jwt/ruby-jwt
+- https://github.com/heartcombo/devise
 - https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/
-- 
