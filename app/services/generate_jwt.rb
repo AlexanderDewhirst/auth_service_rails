@@ -9,6 +9,8 @@ class GenerateJwt
   end
 
   def call
+    return unless user
+
     # Check memory for JWT token. Invalidate.
     optional_payload = { exp: 15.minutes.from_now.to_i }
     required_payload = { id: user.id }
