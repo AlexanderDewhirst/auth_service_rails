@@ -5,7 +5,7 @@ RSpec.describe "Sessions", type: :request do
     let(:params) { { users: { email:  "foobar@bazboz.com", password: "testtest" } } }
     context "with no auth" do
       before do
-        post api_user_session_path, params: params
+        post user_session_path, params: params
       end
 
       it { expect(response).to have_http_status(:unauthorized) }
@@ -18,7 +18,7 @@ RSpec.describe "Sessions", type: :request do
         let(:jwt) { GenerateJwt.new(user: user).call }
 
         before do
-          post api_user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: params
+          post user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: params
         end
 
         it { expect(response).to have_http_status(:ok) }
@@ -28,7 +28,7 @@ RSpec.describe "Sessions", type: :request do
       context "with expired JWT token" do
         before do
           jwt = GenerateJwt.new(user: user, exp: 15.minutes.ago.to_i ).call
-          post api_user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: params
+          post user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: params
         end
 
         it { expect(response).to have_http_status(:unauthorized) }
@@ -39,7 +39,7 @@ RSpec.describe "Sessions", type: :request do
 
         before do
           jwt = blocked_jwt.token
-          post api_user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: params
+          post user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: params
         end
 
         it { expect(response).to have_http_status(:unauthorized) }
