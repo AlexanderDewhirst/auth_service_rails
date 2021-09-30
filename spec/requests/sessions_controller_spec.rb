@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Sessions", type: :request do
-  describe "POST /" do
+  describe "POST /api/login" do
     context "with no auth" do
       before do
-        post api_user_session_path, params: { users: { email: "foobar@bazboz.com", password: "testtest"} }
+        post api_user_session_path, params: { users: { email: "foobar@bazboz.com", password: "testtest" } }
       end
 
       it { expect(response).to have_http_status(:unauthorized) }
@@ -15,7 +15,7 @@ RSpec.describe "Sessions", type: :request do
       let(:jwt) { GenerateJwt.new(user: user).call }
 
       before do
-        post api_user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: { users: { email: "foobar@bazboz.com", password: "testtest"} }
+        post api_user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: { users: { email: "foobar@bazboz.com", password: "testtest" } }
       end
 
       it { expect(response).to have_http_status(:ok) }
@@ -27,7 +27,7 @@ RSpec.describe "Sessions", type: :request do
 
       before do
         jwt = GenerateJwt.new(user: user, exp: 15.minutes.ago.to_i ).call
-        post api_user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: { users: { email: "foobar@bazboz.com", password: "testtest"} }
+        post api_user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: { users: { email: "foobar@bazboz.com", password: "testtest" } }
       end
 
       it { expect(response).to have_http_status(:unauthorized) }
