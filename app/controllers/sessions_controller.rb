@@ -6,7 +6,7 @@ class SessionsController < Devise::SessionsController
     user = User.find_by_email(user_params[:email])
 
     if user && user.valid_password?(user_params[:password])
-      token = GenerateJwt.call(user: user)
+      token = GenerateJwt.new(user: user).call
       render json: token.to_json
     else
       render json: { errors: { 'email or password' => ['is invalid'] } }, status: :unprocessable_entity
