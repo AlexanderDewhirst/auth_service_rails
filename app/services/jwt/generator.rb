@@ -1,5 +1,5 @@
 module Jwt
-  class Generator
+  class Generator < Action
     def initialize(user:, payload: nil)
       @user = user
       @payload = payload || {}

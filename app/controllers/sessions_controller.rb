@@ -15,10 +15,8 @@ class SessionsController < Devise::SessionsController
 
   # DELETE /api/logout
   def destroy
-    user = User.find(@current_user_id)
-    if user
-      @current_user_id = nil
-      # Delete token from memory.
+    if Jwt::Revoker.new(headers: request.headers, user_id: current_user.id).call
+      sign_out(current_user)
       render json: { success: "Successfully logged out." }, status: :ok
     else
       render json: { errors: { 'email or password' => ['is invalid'] } }, status: :unprocessable_entity
@@ -30,7 +28,6 @@ class SessionsController < Devise::SessionsController
   def user_params
     params.require(:users).permit(:email, :password)
   end
-
 
   # Override Devise method
   def respond_to_on_destroy

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Admin::Jwt::Blacklist", type: :request do
+RSpec.describe "Blacklist", type: :request do
   describe "POST /api/jwt/blacklist" do
     context "with no auth" do
       let(:params) { { blacklist: { token: nil } } }
@@ -16,7 +16,7 @@ RSpec.describe "Admin::Jwt::Blacklist", type: :request do
       let(:admin_user) { FactoryBot.create(:user, email: "admin@bazboz.com", is_admin: true) }
       let(:user) { FactoryBot.create(:user) }
       let(:user_jwt) { nil }
-      let(:params) { { blacklist: { token: user_jwt } } }
+      let(:params) { { blacklist: { token: user_jwt, user_id: user.id } } }
 
       context "with current admin JWT token" do
         let(:user_jwt) { Jwt::Generator.new(user: user).call }
