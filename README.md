@@ -25,12 +25,19 @@ Clone the repository and spin up a server in your shell using `rails server`. Fr
 
 ## Performance Testing
 
-Postman allows you to performance test your API with tests. I have run a performance test for the registration endpoint, `POST /api`, with 1000 interations. This performance test is a request in Postman called `Register (performance test)` and has the following performance,
+Postman allows you to performance test your API with tests. 
+
+I have run a performance test for the registrations endpoint, `POST /api`, with 1000 interations. This performance test is a request in Postman called `Register (performance test)` and has the following performance,
 ```
 50 percentile response time 337 is lower than 1000, the number of iterations is 1000
 90 percentile response time 448 is lower than 1000, the number of iterations is 1000
 ```
 
+I have run a performance test for the sessions endpoint, `POST /api/login`, with 1000 interations. This performance test is a request in Postman called `Login (performance test)` and has the following performance,
+```
+50 percentile response time 294 is lower than 1000, the number of iterations is 1000
+90 percentile response time 365.1 is lower than 1000, the number of iterations is 1000
+```
 
 
 ## Current State
@@ -38,10 +45,15 @@ Postman allows you to performance test your API with tests. I have run a perform
 The following actions are currently supported,
 - register `POST /api`
 - login `POST /api/login`
-- logout `DELETE /api/logout`
+- logout `DELETE /api/logout` (may deprecate due to use-case)
+- block JWT token `POST /api/blocked_jwt`
 
 Also, the JWT token is not removed from the client side when deleting a session (i.e. logging out).
 
+
+### Features
+
+This API supports capability for admins to block user JWT tokens.
 
 ### Resources
 
@@ -49,3 +61,4 @@ Below is a list of resources
 - https://github.com/jwt/ruby-jwt
 - https://github.com/heartcombo/devise
 - https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/
+- gist.github.com/jesster2k10/e626ee61d678350a21a9d3e81da2493e
