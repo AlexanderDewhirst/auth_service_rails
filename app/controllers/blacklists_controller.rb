@@ -1,4 +1,4 @@
-class Admin::Jwt::BlacklistController < ApplicationController
+class BlacklistsController < ApplicationController
   before_action :authenticate_user!
   before_action :validate_admin!
 

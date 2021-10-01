@@ -12,11 +12,7 @@ Rails.application.routes.draw do
       sign_out: :logout
     }
 
-    scope :admin do
-      scope :jwt do
-        resource :blacklist, controller: "admin/jwt/blacklist", only: [:create]
-      end
-    end
+    resource :blacklist, only: [:create]
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
