@@ -35,7 +35,7 @@ RSpec.describe "Sessions", type: :request do
       end
 
       context "with blacklisted JWT token" do
-        let(:blacklisted_jwt) { FactoryBot.create(:jwt_blacklist, user: user) }
+        let(:blacklisted_jwt) { FactoryBot.create(:blacklist_token, user: user) }
 
         before do
           jwt = blacklisted_jwt.token

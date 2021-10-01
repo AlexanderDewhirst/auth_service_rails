@@ -1,9 +1,9 @@
 FactoryBot.define do
-  factory :jwt_blacklist, class: Blacklist do
+  factory :blacklist_token, class: BlacklistToken do
     association :user
 
-    before(:create) do |jwt_blacklist, evaluator|
-      jwt_blacklist.token = Jwt::Generator.new(user: jwt_blacklist.user, payload: { exp: Time.now.to_i }).call
+    before(:create) do |blacklist_token, evaluator|
+      blacklist_token.token = Jwt::Generator.new(user: blacklist_token.user, payload: { exp: Time.now.to_i }).call
     end
   end
 end
