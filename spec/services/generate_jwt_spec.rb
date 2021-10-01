@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GenerateJwt, type: :service do
+RSpec.describe Jwt::Generator, type: :service do
   subject(:clazz) { described_class.new(user: user) }
 
   describe "#call" do

@@ -4,5 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable
 
-  has_many :blocked_jwts
+  has_many :blacklisted_jwts, class_name: "Blacklist", dependent: :destroy
 end

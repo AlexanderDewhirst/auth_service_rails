@@ -18,8 +18,6 @@ gem 'devise'
 gem 'jwt'
 gem 'rspec-rails'
 gem 'omniauth'
-gem 'dry-initializer-rails'
-gem 'dry-types'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

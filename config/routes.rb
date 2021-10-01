@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     }
 
     scope :admin do
-      resource :blocked_jwt, controller: "admin/blocked_jwt", only: [:create]
+      scope :jwt do
+        resource :blacklist, controller: "admin/jwt/blacklist", only: [:create]
+      end
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

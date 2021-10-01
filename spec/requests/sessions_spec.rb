@@ -15,7 +15,7 @@ RSpec.describe "Sessions", type: :request do
       let(:user) { FactoryBot.create(:user) }
 
       context "with current JWT token" do
-        let(:jwt) { GenerateJwt.new(user: user).call }
+        let(:jwt) { Jwt::Generator.new(user: user).call }
 
         before do
           post user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: params
@@ -27,18 +27,18 @@ RSpec.describe "Sessions", type: :request do
       
       context "with expired JWT token" do
         before do
-          jwt = GenerateJwt.new(user: user, exp: 15.minutes.ago.to_i ).call
+          jwt = Jwt::Generator.new(user: user, payload: { exp: 15.minutes.ago.to_i }).call
           post user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: params
         end
 
         it { expect(response).to have_http_status(:unauthorized) }
       end
 
-      context "with blocked JWT token" do
-        let(:blocked_jwt) { FactoryBot.create(:blocked_jwt, user: user) }
+      context "with blacklisted JWT token" do
+        let(:blacklisted_jwt) { FactoryBot.create(:jwt_blacklist, user: user) }
 
         before do
-          jwt = blocked_jwt.token
+          jwt = blacklisted_jwt.token
           post user_session_path, headers: { "Authorization" => "Bearer " + jwt }, params: params
         end
 
