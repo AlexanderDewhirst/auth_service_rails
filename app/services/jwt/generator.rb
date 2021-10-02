@@ -21,7 +21,7 @@ module Jwt
 
       token = JWT.encode(payload.merge!(required_payload), ENV['JWT_TOKEN'])
 
-      [token, refresh_token.token]
+      [token, refresh_token_value]
     end
   end
 end
