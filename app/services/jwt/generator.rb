@@ -12,7 +12,7 @@ module Jwt
 
       refresh_payload = { exp: 4.hours.from_now.to_i }.merge!(global_payload)
       refresh_token_value = JWT.encode(refresh_payload, ENV["JWT_TOKEN"])
-      refresh_token = RefreshToken.create(token: refresh_token_value, user: @user3)
+      refresh_token = RefreshToken.create(token: refresh_token_value, user: @user)
 
       optional_payload = { exp: 15.minutes.from_now.to_i }
       required_payload = { refresh_id: refresh_token.id }.merge!(global_payload)

@@ -189,6 +189,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     thor (1.1.0)
+    timecop (0.9.4)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     warden (1.2.9)
@@ -217,6 +218,7 @@ DEPENDENCIES
   rails (~> 6.1.4, >= 6.1.4.1)
   rspec-rails
   spring
+  timecop
   tzinfo-data
 
 RUBY VERSION

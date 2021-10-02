@@ -29,6 +29,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 # gem 'rack-cors'
 
 group :development, :test do
+  gem "timecop"
   gem 'factory_bot_rails'
   gem 'dotenv-rails'
   gem 'pry-byebug', '>= 3.7'
