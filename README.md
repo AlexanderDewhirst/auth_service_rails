@@ -53,7 +53,7 @@ Also, the JWT token is not removed from the client side when deleting a session 
 
 ### Features
 
-This API supports capability for admins to block user JWT tokens.
+This API supports capability for admins to block user JWT tokens. This API also supports refresh tokens to automatically reauthenticate the current user.
 
 ### Resources
 
