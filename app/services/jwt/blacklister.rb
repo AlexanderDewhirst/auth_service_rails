@@ -9,7 +9,8 @@ module Jwt
       return nil unless @token && @user_id
 
       user = validate_user_from_token(token: @token, user_id: @user_id)
-      return nil unless user.present?
+      token = validate_token(token: @token)
+      return nil unless user.present? && token.present?
 
       user.blacklist_tokens.create!(token: @token)
     end

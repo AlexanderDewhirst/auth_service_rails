@@ -6,10 +6,7 @@ module Jwt
 
       user = User.find(decoded_token[0]["id"])
 
-      blacklisted = Blacklist.find_by_token(token).present?
-      valid_expiry = decoded_token[0]["exp"] - Time.now.to_i > 0
-
-      return user if !blacklisted && valid_expiry
+      return user
     end
 
     def validate_user_from_token(token:, user_id:)
@@ -18,10 +15,17 @@ module Jwt
 
       user = validate_token_user(decoded_token: decoded_token, user_id: user_id)
 
-      blacklisted = Blacklist.find_by_token(token).present?
-      valid_expiry = decoded_token[0]["exp"] - Time.now.to_i > 0
+      return user
+    end
 
-      return user if !blacklisted && valid_expiry
+    def validate_token(token:)
+      decoded_token = decode_token(token: token)
+      return nil unless decoded_token&.first&.dig("id")&.present? && decoded_token&.first&.dig("exp")&.present?
+
+      blacklisted = BlacklistToken.find_by_token(token).present?
+      valid_expiry = decoded_token[0]["exp"] - Time.now.to_i > 0
+      
+      return token if !blacklisted && valid_expiry
     end
 
     def get_token(headers:)

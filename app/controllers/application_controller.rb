@@ -1,14 +1,18 @@
 class ApplicationController < ActionController::API
   respond_to :html, :json
-  before_action :process_token, unless: :is_registering?
+  before_action :process_token, unless: :is_authenticating?
   # before_action :underscore_params!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user!, unless: :is_registering?
+  before_action :authenticate_user!, unless: :is_authenticating?
 
   private
 
-  def is_registering?
-    params["controller"] == "registrations" && params["action"] == "create"
+  def is_authenticating?
+    (
+      params["controller"] == "registrations" && params["action"] == "create"
+    ) || (
+      params["controller"] == "sessions" && params["action"] == "create"
+    )
   end
 
   def process_token

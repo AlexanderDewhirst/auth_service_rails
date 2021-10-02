@@ -10,8 +10,7 @@ RSpec.describe Jwt::Generator, type: :service do
       it "generates a JWT token" do
         res = clazz.call
 
-        expect(res).to be_an_instance_of(String)
-        expect(res.length).to eq 103
+        expect(res).to be_an_instance_of(Array)
       end
     end
 
