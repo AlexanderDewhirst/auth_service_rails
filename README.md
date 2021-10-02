@@ -31,12 +31,6 @@ Postman allows you to performance test your API with tests.
 
 I have run a performance test for the registrations endpoint, `POST /api`, with 1000 interations. This performance test is a request in Postman called `Register (performance test)` and has the following performance,
 ```
-50 percentile response time 337 is lower than 1000, the number of iterations is 1000
-90 percentile response time 448 is lower than 1000, the number of iterations is 1000
-```
-
-After further development, most notably adding refresh tokens to the JWT, the registration performance is
-```
 50 percentile response time 353 is lower than 1000, the number of iterations is 1000
 90 percentile response time 514 is lower than 1000, the number of iterations is 1000
 ```
@@ -45,10 +39,9 @@ After further development, most notably adding refresh tokens to the JWT, the re
 
 I have run a performance test for the sessions endpoint, `POST /api/login`, with 1000 interations. This performance test is a request in Postman called `Login (performance test)` and has the following performance,
 ```
-50 percentile response time 294 is lower than 1000, the number of iterations is 1000
-90 percentile response time 365.1 is lower than 1000, the number of iterations is 1000
+50 percentile response time 296.5 is lower than 1000, the number of iterations is 1000
+90 percentile response time 386.1 is lower than 1000, the number of iterations is 1000
 ```
-
 
 ## Current State
 
