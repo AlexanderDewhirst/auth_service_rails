@@ -21,7 +21,7 @@ module Jwt
     end
 
     def get_token(headers:)
-      headers['Authorization']&.split(' ')&.last
+      headers&.stringify_keys.dig('Authorization')&.split(' ')&.last
     end
 
     def decode_token(token:, valid:)

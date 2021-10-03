@@ -1,5 +1,5 @@
 module Jwt
-  class Revoker
+  class Revoker < Action
     def initialize(headers:, user:)
       @token = get_token(headers: headers)
       @user = user
@@ -8,12 +8,12 @@ module Jwt
     def call
       return nil unless @token
 
+      @user.refresh_tokens.destroy_all
+
       user = validate_user_from_token(token: @token, user: @user)
       return nil unless user.present?
 
-      user.refresh_tokens.destroy_all
-
-      Jwt::Blacklist.new(token: @token, user_id: @user_id).call
+      Jwt::Blacklister.new(token: @token, user: user).call
     end
   end
 end

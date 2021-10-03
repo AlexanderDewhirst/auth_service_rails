@@ -21,7 +21,7 @@ RSpec.describe Jwt::Authenticator, type: :service do
         end
       end
 
-      context "with expired JWT token and valid refresh token" do
+      context "with expired JWT token and valid refresh JWT token" do
         let(:payload) { { exp: 30.minutes.ago.to_i } } 
         let(:token) { Jwt::Generator.new(user: user, payload: payload).call }
 
