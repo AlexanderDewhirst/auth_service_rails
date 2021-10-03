@@ -1,14 +1,14 @@
 module Jwt
   class Revoker
-    def initialize(headers:, user_id:)
+    def initialize(headers:, user:)
       @token = get_token(headers: headers)
-      @user_id = user_id
+      @user = user
     end
 
     def call
       return nil unless @token
 
-      user = validate_user_from_token(token: @token, user_id: @user_id)
+      user = validate_user_from_token(token: @token, user: @user)
       return nil unless user.present?
 
       user.refresh_tokens.destroy_all

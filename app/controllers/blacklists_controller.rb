@@ -3,7 +3,8 @@ class BlacklistsController < ApplicationController
   before_action :validate_admin!
 
   def create
-    if Jwt::Blacklister.new(token: blacklist_params.dig("token"), user_id: blacklist_params.dig("user_id")).call
+    user = User.find(blacklist_params.dig("user_id"))
+    if user && Jwt::Blacklister.new(token: blacklist_params.dig("token"), user: user).call
       render json: { success: "Successfully blacklisted JWT token" }, status: :ok
     else
       render json: { errors: "Failed to block JWT token" }, status: :unprocessable_entity
