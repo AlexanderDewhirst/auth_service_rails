@@ -49,7 +49,7 @@ The following actions are currently supported,
 - register `POST /api`
 - login `POST /api/login`
 - logout `DELETE /api/logout` (may deprecate due to use-case)
-- block JWT token `POST /api/blocked_jwt`
+- blacklist JWT token `POST /api/blacklist`
 
 Also, the JWT token is not removed from the client side when deleting a session (i.e. logging out).
 
