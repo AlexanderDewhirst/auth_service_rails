@@ -16,9 +16,9 @@ class ApplicationController < ActionController::API
   end
 
   def process_token
-    user, token = Jwt::Authenticator.new(headers: request.headers).call
+    user = Jwt::Authenticator.new(headers: request.headers).call
 
-    if user && token
+    if user
       @current_user = user
     else
       head :unauthorized

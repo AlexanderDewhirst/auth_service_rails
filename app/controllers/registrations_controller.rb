@@ -7,7 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
 
     if user.save
       @current_user = user
-      token, _ = Jwt::Generator.new(user: user).call
+      token = Jwt::Generator.new(user: user).call
       render json: token.to_json
     else
       render json: { errors: { 'email or password' => ['is invalid'] } }, status: :unprocessable_entity

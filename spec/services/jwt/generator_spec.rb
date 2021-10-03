@@ -22,16 +22,15 @@ RSpec.describe Jwt::Generator, type: :service do
         it "generates a JWT token" do
           res = clazz.call
 
-          expect(res).to be_an_instance_of(Array)
+          refresh_token = RefreshToken.find(JWT.decode(res, ENV["JWT_TOKEN"])[0]["refresh_id"])
 
           # Valid token
-          expect(user.refresh_tokens.pluck(:id)).to include(JWT.decode(res[0], ENV["JWT_TOKEN"])[0]["refresh_id"])
-          expect(JWT.decode(res[0], ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
-          expect(JWT.decode(res[0], ENV["JWT_TOKEN"])[0]["exp"]).to eq(15.minutes.from_now.to_i)
+          expect(JWT.decode(res, ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
+          expect(JWT.decode(res, ENV["JWT_TOKEN"])[0]["exp"]).to eq(15.minutes.from_now.to_i)
 
           # Valid refresh token
-          expect(JWT.decode(res[1], ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
-          expect(JWT.decode(res[1], ENV["JWT_TOKEN"])[0]["exp"]).to eq(4.hours.from_now.to_i)
+          expect(JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
+          expect(JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])[0]["exp"]).to eq(4.hours.from_now.to_i)
         end
       end
 
@@ -41,16 +40,15 @@ RSpec.describe Jwt::Generator, type: :service do
         it "generates a JWT token" do
           res = clazz.call
 
-          expect(res).to be_an_instance_of(Array)
+          refresh_token = RefreshToken.find(JWT.decode(res, ENV["JWT_TOKEN"])[0]["refresh_id"])
 
           # Valid token
-          expect(user.refresh_tokens.pluck(:id)).to include(JWT.decode(res[0], ENV["JWT_TOKEN"])[0]["refresh_id"])
-          expect(JWT.decode(res[0], ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
-          expect(JWT.decode(res[0], ENV["JWT_TOKEN"])[0]["exp"]).to eq(1.hour.from_now.to_i)
+          expect(JWT.decode(res, ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
+          expect(JWT.decode(res, ENV["JWT_TOKEN"])[0]["exp"]).to eq(1.hour.from_now.to_i)
 
           # Valid refresh token
-          expect(JWT.decode(res[1], ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
-          expect(JWT.decode(res[1], ENV["JWT_TOKEN"])[0]["exp"]).to eq(4.hours.from_now.to_i)
+          expect(JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
+          expect(JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])[0]["exp"]).to eq(4.hours.from_now.to_i)
         end
       end
     end
@@ -59,7 +57,7 @@ RSpec.describe Jwt::Generator, type: :service do
       it "returns nil" do
         res = clazz.call
 
-        expect(res).to eq(nil)
+        expect(res).to be_nil
       end
     end
   end
