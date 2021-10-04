@@ -64,4 +64,4 @@ Below is a list of resources
 - https://github.com/jwt/ruby-jwt
 - https://github.com/heartcombo/devise
 - https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/
-- gist.github.com/jesster2k10/e626ee61d678350a21a9d3e81da2493e
+- https://gist.github.com/jesster2k10/e626ee61d678350a21a9d3e81da2493e
