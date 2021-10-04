@@ -1,16 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Jwt::Revoker, type: :service do
-  subject(:clazz) { described_class.new(headers: headers, user: user) }
+  subject(:clazz) { described_class.new(token: token, user: user) }
 
-  let(:headers) { {} }
   let(:token) { nil }
   let(:user) { nil }
 
   describe "#call" do
     context "with valid headers" do
       let(:user) { FactoryBot.create(:user) }
-      let(:headers) { { "Authorization": "Bearer " + token } }
 
       context "with current JWT token" do
         let(:token) { Jwt::Generator.new(user: user).call }

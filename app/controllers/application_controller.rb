@@ -16,7 +16,8 @@ class ApplicationController < ActionController::API
   end
 
   def process_token
-    user = Jwt::Authenticator.new(headers: request.headers).call
+    token = get_token(request.headers)
+    user = Jwt::Authenticator.new(token: token).call
 
     if user
       @current_user = user
@@ -43,5 +44,11 @@ class ApplicationController < ActionController::API
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:users, keys: [:email, :password])
+  end
+
+  private
+
+  def get_token(headers)
+    headers['Authorization']&.split(' ')&.last
   end
 end

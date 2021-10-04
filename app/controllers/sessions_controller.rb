@@ -16,7 +16,8 @@ class SessionsController < Devise::SessionsController
 
   # DELETE /api/logout
   def destroy
-    if Jwt::Revoker.new(headers: request.headers, user: current_user).call
+    token = get_token(request.headers)
+    if Jwt::Revoker.new(token: token, user: current_user).call
       sign_out(current_user)
       render json: { success: "Successfully logged out." }, status: :ok
     else

@@ -1,7 +1,7 @@
 module Jwt
   class Authenticator < Action
-    def initialize(headers:, token: nil, is_refresh: false)
-      @token = token || get_token(headers: headers)
+    def initialize(token:, is_refresh: false)
+      @token = token
       @is_refresh = is_refresh
     end
 
@@ -12,7 +12,7 @@ module Jwt
       return user if user || @is_refresh
  
       token = Jwt::Refresher.new(token: @token).call
-      Jwt::Authenticator.new(headers: nil, token: token, is_refresh: true).call
+      Jwt::Authenticator.new(token: token, is_refresh: true).call
     end
   end
 end

@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Jwt::Authenticator, type: :service do
-  subject(:clazz) { described_class.new(headers: headers, token: token) }
+  subject(:clazz) { described_class.new(token: token) }
 
-  let(:headers) { {} }
   let(:token) { nil }
 
   describe "#call" do

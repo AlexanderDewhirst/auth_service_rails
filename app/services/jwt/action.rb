@@ -20,10 +20,6 @@ module Jwt
       return user unless blacklisted
     end
 
-    def get_token(headers:)
-      headers&.stringify_keys.dig('Authorization')&.split(' ')&.last
-    end
-
     def decode_token(token:, valid:)
       begin
         JWT.decode(token, ENV["JWT_TOKEN"], valid)
