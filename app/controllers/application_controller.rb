@@ -48,7 +48,7 @@ class ApplicationController < ActionController::API
 
   def build_uri(request:)
     request = request.headers.to_h
-    "#{request[:HTTP_HOST]}#{request[:REQUEST_URI]}"
+    "#{request["HTTP_HOST"]}#{request["REQUEST_URI"]}"
   end
 
   private
