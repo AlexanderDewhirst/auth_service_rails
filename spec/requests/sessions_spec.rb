@@ -34,7 +34,8 @@ RSpec.describe "Sessions", type: :request do
       let(:user) { FactoryBot.create(:user) }
 
       context "with valid JWT token" do
-        let(:token) { Jwt::Generator.new(user: user).call }
+        let(:req) { {"HTTP_HOST": "localhost:3000", "REQUEST_URI": "/api"} }
+        let(:token) { Jwt::Generator.new(user: user, req: req).call }
 
         before do
           @current_user = user

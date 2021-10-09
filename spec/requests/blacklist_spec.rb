@@ -17,10 +17,11 @@ RSpec.describe "Blacklist", type: :request do
       let(:user) { FactoryBot.create(:user) }
       let(:user_jwt) { nil }
       let(:params) { { blacklist: { token: user_jwt, user_id: user.id } } }
+      let(:req) { {"HTTP_HOST": "localhost:3000", "REQUEST_URI": "/api"} }
 
       context "with current admin JWT token" do
-        let(:user_jwt) { Jwt::Generator.new(user: user).call }
-        let(:admin_jwt) { Jwt::Generator.new(user: admin_user).call }
+        let(:user_jwt) { Jwt::Generator.new(user: user, req: req).call }
+        let(:admin_jwt) { Jwt::Generator.new(user: admin_user, req: req).call }
 
         before do
           post blacklist_path, headers: { "Authorization" => "Bearer " + admin_jwt }, params: params
@@ -32,8 +33,8 @@ RSpec.describe "Blacklist", type: :request do
       end
 
       context "with refresh admin JWT token" do
-        let(:user_jwt) { Jwt::Generator.new(user: user).call }
-        let(:admin_jwt) { Jwt::Generator.new(user: admin_user, payload: { exp: 15.minutes.ago.to_i }).call }
+        let(:user_jwt) { Jwt::Generator.new(user: user, req: req).call }
+        let(:admin_jwt) { Jwt::Generator.new(user: admin_user, req: req, payload: { exp: 15.minutes.ago.to_i }).call }
 
         before do
           post blacklist_path, headers: { "Authorization" => "Bearer " + admin_jwt }, params: params
@@ -45,8 +46,8 @@ RSpec.describe "Blacklist", type: :request do
       end
 
       context "with expired user JWT token" do
-        let(:user_jwt) { Jwt::Generator.new(user: user, payload: { exp: 15.minutes.ago.to_i }).call }
-        let(:admin_jwt) { Jwt::Generator.new(user: admin_user).call }
+        let(:user_jwt) { Jwt::Generator.new(user: user, req: req, payload: { exp: 15.minutes.ago.to_i }).call }
+        let(:admin_jwt) { Jwt::Generator.new(user: admin_user, req: req).call }
 
         before do
           post blacklist_path, headers: { "Authorization" => "Bearer " + admin_jwt }, params: params
@@ -58,7 +59,7 @@ RSpec.describe "Blacklist", type: :request do
 
       context "with invalid user JWT token" do
         let(:user_jwt) { "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MzI5NzIxMDksImlkIjoyMzM3fQ.Clc4Ak6B8ds5eS0oUFPhWS9TvfFdg-94k2nM90YFL3U" }
-        let(:admin_jwt) { Jwt::Generator.new(user: admin_user).call }
+        let(:admin_jwt) { Jwt::Generator.new(user: admin_user, req: req).call }
 
         before do
           post blacklist_path, headers: { "Authorization" => "Bearer " + admin_jwt }, params: params

@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Jwt::Generator, type: :service do
-  subject(:clazz) { described_class.new(user: user, payload: payload) }
+  subject(:clazz) { described_class.new(user: user, req: req, payload: payload) }
 
   let(:user) { nil }
   let(:payload) { nil }
+  let(:req) { "localhost:3000/api" }
 
   describe "#call" do
     before do
@@ -25,12 +26,16 @@ RSpec.describe Jwt::Generator, type: :service do
           refresh_token = RefreshToken.find(JWT.decode(res, ENV["JWT_TOKEN"])[0]["refresh_id"])
 
           # Valid token
-          expect(JWT.decode(res, ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
-          expect(JWT.decode(res, ENV["JWT_TOKEN"])[0]["exp"]).to eq(15.minutes.from_now.to_i)
+          decoded_token = JWT.decode(res, ENV["JWT_TOKEN"])
+          expect(decoded_token[0]["sub"]).to eq(user.id)
+          expect(decoded_token[0]["exp"]).to eq(15.minutes.from_now.to_i)
+          expect(decoded_token[0]["iss"]).to eq("localhost:3000/api")
 
           # Valid refresh token
-          expect(JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
-          expect(JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])[0]["exp"]).to eq(4.hours.from_now.to_i)
+          decoded_refresh_token = JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])
+          expect(decoded_refresh_token[0]["sub"]).to eq(user.id)
+          expect(decoded_refresh_token[0]["exp"]).to eq(4.hours.from_now.to_i)
+          expect(decoded_refresh_token[0]["iss"]).to eq("localhost:3000/api")
         end
       end
 
@@ -43,12 +48,16 @@ RSpec.describe Jwt::Generator, type: :service do
           refresh_token = RefreshToken.find(JWT.decode(res, ENV["JWT_TOKEN"])[0]["refresh_id"])
 
           # Valid token
-          expect(JWT.decode(res, ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
-          expect(JWT.decode(res, ENV["JWT_TOKEN"])[0]["exp"]).to eq(1.hour.from_now.to_i)
+          decoded_token = JWT.decode(res, ENV["JWT_TOKEN"])
+          expect(decoded_token[0]["sub"]).to eq(user.id)
+          expect(decoded_token[0]["exp"]).to eq(1.hour.from_now.to_i)
+          expect(decoded_token[0]["iss"]).to eq("localhost:3000/api")
 
           # Valid refresh token
-          expect(JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])[0]["id"]).to eq(user.id)
-          expect(JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])[0]["exp"]).to eq(4.hours.from_now.to_i)
+          decoded_refresh_token = JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])
+          expect(decoded_refresh_token[0]["sub"]).to eq(user.id)
+          expect(decoded_refresh_token[0]["exp"]).to eq(4.hours.from_now.to_i)
+          expect(decoded_refresh_token[0]["iss"]).to eq("localhost:3000/api")
         end
       end
     end

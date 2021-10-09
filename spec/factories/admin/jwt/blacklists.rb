@@ -3,7 +3,9 @@ FactoryBot.define do
     association :user
 
     before(:create) do |blacklist_token, evaluator|
-      token = Jwt::Generator.new(user: blacklist_token.user, payload: { exp: Time.now.to_i }).call
+      payload = { exp: Time.now.to_i }
+      request = { "HTTP_HOST": "localhost:3000", "REQUEST_URI": "/api" }
+      token = Jwt::Generator.new(user: blacklist_token.user, req: request, payload: payload).call
       blacklist_token.token = token
     end
   end

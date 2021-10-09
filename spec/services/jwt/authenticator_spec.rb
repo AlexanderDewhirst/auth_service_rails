@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Jwt::Authenticator, type: :service do
-  subject(:clazz) { described_class.new(token: token) }
+  subject(:clazz) { described_class.new(token: token, req: req) }
 
   let(:token) { nil }
+  let(:req) { {"HTTP_HOST": "localhost:3000", "REQUEST_URI": "/api"} }
 
   describe "#call" do
     context "with valid headers" do
       let(:user) { FactoryBot.create(:user) }
-      let(:headers) { { "Authorization": "Bearer " + token } }
 
       context "with current JWT token" do
-        let(:token) { Jwt::Generator.new(user: user).call }
+        let(:token) { Jwt::Generator.new(user: user, req: req).call }
 
         it "authenticates the token" do
           res = clazz.call
@@ -22,7 +22,7 @@ RSpec.describe Jwt::Authenticator, type: :service do
 
       context "with expired JWT token and valid refresh JWT token" do
         let(:payload) { { exp: 30.minutes.ago.to_i } } 
-        let(:token) { Jwt::Generator.new(user: user, payload: payload).call }
+        let(:token) { Jwt::Generator.new(user: user, req: req, payload: payload).call }
 
         it "refreshes and authenticates the token" do
           res = clazz.call

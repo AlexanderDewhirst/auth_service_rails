@@ -1,14 +1,15 @@
 module Jwt
   class Generator < Action
-    def initialize(user:, payload: nil)
+    def initialize(user:, req:, payload: nil)
       @user = user
+      @iss = req
       @payload = payload || {}
     end
 
     def call
       return unless @user
 
-      global_payload = { id: @user.id }
+      global_payload = { sub: @user.id, iss: @iss }
 
       refresh_payload = { exp: 4.hours.from_now.to_i }.merge!(global_payload)
       refresh_token_value = JWT.encode(refresh_payload, ENV["JWT_TOKEN"])
