@@ -1,6 +1,8 @@
 # Auth Service
 
-This microservice implements a token and session based authentication system. This is a Rails API using `jwt` and `devise`.
+This microservice implements a token and session based authentication system. This is a Rails API using `jwt` and `devise`. 
+
+RFC 7519 documents the use of JWTs and expectations for the payload: https://datatracker.ietf.org/doc/html/rfc7519
 
 ## Getting Started
 
@@ -43,15 +45,13 @@ I have run a performance test for the sessions endpoint, `POST /api/login`, with
 90 percentile response time 386.1 is lower than 1000, the number of iterations is 1000
 ```
 
-## Current State
+## Actions
 
 The following actions are currently supported,
 - register `POST /api`
 - login `POST /api/login`
 - logout `DELETE /api/logout` (may deprecate due to use-case)
 - blacklist JWT token `POST /api/blacklist`
-
-Also, the JWT token is not removed from the client side when deleting a session (i.e. logging out).
 
 
 ### Features
