@@ -27,7 +27,7 @@ module Jwt
 
     def global_payload
       current_time = Time.now.to_i
-      jti = JtiHelper.build_jti(current_time)
+      jti = build_jti(current_time)
       { sub: @user.id, iss: @iss, iat: current_time, jti: jti }
     end
   end

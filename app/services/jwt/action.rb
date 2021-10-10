@@ -1,7 +1,5 @@
 module Jwt
   class Action
-    include JtiHelper
-
     def authenticate_user_from_token(token:)
       decoded_token = decode_token(token: token, valid: true)
       return nil unless decoded_token&.first&.dig("sub")&.present? && decoded_token&.first&.dig("exp")&.present?
@@ -30,13 +28,18 @@ module Jwt
       end
     end
 
+    def build_jti(iat)
+      jti_raw = [ENV["JWT_TOKEN"], iat].join(':').to_s
+      Digest::MD5.hexdigest(jti_raw)
+    end
+
     def valid_token_user?(decoded_token:, user:)
       token_user = User.find(decoded_token[0]["sub"])
       user == token_user
     end
 
     def validate_jti(jti, payload)
-      payload_jti = JtiHelper.build_jti(payload['iat'])
+      payload_jti = build_jti(payload['iat'])
       jti == payload_jti
     end
   end
