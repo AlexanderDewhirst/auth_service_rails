@@ -33,8 +33,8 @@ Postman allows you to performance test your API with tests.
 
 I have run a performance test for the registrations endpoint, `POST /api`, with 1000 interations. This performance test is a request in Postman called `Register (performance test)` and has the following performance,
 ```
-50 percentile response time 296 is lower than 1000, the number of iterations is 1000
-90 percentile response time 397 is lower than 1000, the number of iterations is 1000
+50 percentile response time 345 is lower than 1000, the number of iterations is 1000
+90 percentile response time 432 is lower than 1000, the number of iterations is 1000
 ```
 
 ### Login
