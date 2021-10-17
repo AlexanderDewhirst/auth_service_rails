@@ -20,7 +20,9 @@ module Jwt
       payload = @payload.reverse_merge!(optional_payload)
       payload.merge!(global_payload)
 
-      JWT.encode(payload, ENV['JWT_TOKEN'])
+      access_token_value = JWT.encode(payload, ENV['JWT_TOKEN'])
+
+      [access_token_value, refresh_token_value]
     end
 
     private

@@ -23,21 +23,24 @@ RSpec.describe Jwt::Generator, type: :service do
         it "generates a JWT token" do
           res = clazz.call
 
-          refresh_token = RefreshToken.find(JWT.decode(res, ENV["JWT_TOKEN"])[0]["refresh_id"])
+          access_token_decoded = JWT.decode(res[0], ENV["JWT_TOKEN"])
+          refresh_token_decoded = JWT.decode(res[1], ENV["JWT_TOKEN"])
+          stored_refresh_token = RefreshToken.find(access_token_decoded[0]["refresh_id"])
+          stored_refresh_token_decoded = JWT.decode(stored_refresh_token.token, ENV["JWT_TOKEN"])
+
+          expect(refresh_token_decoded).to eq(stored_refresh_token_decoded)
 
           # Valid token
-          decoded_token = JWT.decode(res, ENV["JWT_TOKEN"])
-          expect(decoded_token[0]["sub"]).to eq(user.id)
-          expect(decoded_token[0]["iat"]).to eq(Time.now.to_i)
-          expect(decoded_token[0]["exp"]).to eq(15.minutes.from_now.to_i)
-          expect(decoded_token[0]["iss"]).to eq("localhost:3000/api")
+          expect(access_token_decoded[0]["sub"]).to eq(user.id)
+          expect(access_token_decoded[0]["iat"]).to eq(Time.now.to_i)
+          expect(access_token_decoded[0]["exp"]).to eq(15.minutes.from_now.to_i)
+          expect(access_token_decoded[0]["iss"]).to eq("localhost:3000/api")
 
           # Valid refresh token
-          decoded_refresh_token = JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])
-          expect(decoded_refresh_token[0]["sub"]).to eq(user.id)
-          expect(decoded_refresh_token[0]["iat"]).to eq(Time.now.to_i)
-          expect(decoded_refresh_token[0]["exp"]).to eq(4.hours.from_now.to_i)
-          expect(decoded_refresh_token[0]["iss"]).to eq("localhost:3000/api")
+          expect(refresh_token_decoded[0]["sub"]).to eq(user.id)
+          expect(refresh_token_decoded[0]["iat"]).to eq(Time.now.to_i)
+          expect(refresh_token_decoded[0]["exp"]).to eq(4.hours.from_now.to_i)
+          expect(refresh_token_decoded[0]["iss"]).to eq("localhost:3000/api")
         end
       end
 
@@ -47,21 +50,24 @@ RSpec.describe Jwt::Generator, type: :service do
         it "generates a JWT token" do
           res = clazz.call
 
-          refresh_token = RefreshToken.find(JWT.decode(res, ENV["JWT_TOKEN"])[0]["refresh_id"])
+          access_token_decoded = JWT.decode(res[0], ENV["JWT_TOKEN"])
+          refresh_token_decoded = JWT.decode(res[1], ENV["JWT_TOKEN"])
+          stored_refresh_token = RefreshToken.find(access_token_decoded[0]["refresh_id"])
+          stored_refresh_token_decoded = JWT.decode(stored_refresh_token.token, ENV["JWT_TOKEN"])
+
+          expect(refresh_token_decoded).to eq(stored_refresh_token_decoded)
 
           # Valid token
-          decoded_token = JWT.decode(res, ENV["JWT_TOKEN"])
-          expect(decoded_token[0]["sub"]).to eq(user.id)
-          expect(decoded_token[0]["iat"]).to eq(Time.now.to_i)
-          expect(decoded_token[0]["exp"]).to eq(1.hour.from_now.to_i)
-          expect(decoded_token[0]["iss"]).to eq("localhost:3000/api")
+          expect(access_token_decoded[0]["sub"]).to eq(user.id)
+          expect(access_token_decoded[0]["iat"]).to eq(Time.now.to_i)
+          expect(access_token_decoded[0]["exp"]).to eq(1.hour.from_now.to_i)
+          expect(access_token_decoded[0]["iss"]).to eq("localhost:3000/api")
 
           # Valid refresh token
-          decoded_refresh_token = JWT.decode(refresh_token.token, ENV["JWT_TOKEN"])
-          expect(decoded_refresh_token[0]["sub"]).to eq(user.id)
-          expect(decoded_refresh_token[0]["iat"]).to eq(Time.now.to_i)
-          expect(decoded_refresh_token[0]["exp"]).to eq(4.hours.from_now.to_i)
-          expect(decoded_refresh_token[0]["iss"]).to eq("localhost:3000/api")
+          expect(refresh_token_decoded[0]["sub"]).to eq(user.id)
+          expect(refresh_token_decoded[0]["iat"]).to eq(Time.now.to_i)
+          expect(refresh_token_decoded[0]["exp"]).to eq(4.hours.from_now.to_i)
+          expect(refresh_token_decoded[0]["iss"]).to eq("localhost:3000/api")
         end
       end
     end

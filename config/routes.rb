@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       sign_out: :logout
     }
 
+    resource :refresh, only: [:create]
     resource :blacklist, only: [:create]
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

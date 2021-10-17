@@ -11,7 +11,8 @@ RSpec.describe Jwt::Authenticator, type: :service do
       let(:user) { FactoryBot.create(:user) }
 
       context "with current JWT token" do
-        let(:token) { Jwt::Generator.new(user: user, req: req).call }
+        let(:user_jwts) { Jwt::Generator.new(user: user, req: req).call }
+        let(:token) { user_jwts[0] }
 
         it "authenticates the token" do
           res = clazz.call
@@ -22,12 +23,13 @@ RSpec.describe Jwt::Authenticator, type: :service do
 
       context "with expired JWT token and valid refresh JWT token" do
         let(:payload) { { exp: 30.minutes.ago.to_i } } 
-        let(:token) { Jwt::Generator.new(user: user, req: req, payload: payload).call }
+        let(:user_jwts) { Jwt::Generator.new(user: user, req: req, payload: payload).call }
+        let(:token) { user_jwts[0] }
 
         it "refreshes and authenticates the token" do
           res = clazz.call
           
-          expect(res).to eq(user)
+          expect(res).to be_nil
         end
       end
     end
