@@ -53,6 +53,7 @@ The following actions are currently supported,
 - login `POST /api/login`
 - logout `DELETE /api/logout` (may deprecate due to use-case)
 - blacklist JWT token `POST /api/blacklist`
+- refresh JWT token `POST /api/refresh`
 
 
 ### Features
