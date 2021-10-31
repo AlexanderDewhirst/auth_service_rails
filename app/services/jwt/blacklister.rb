@@ -8,8 +8,8 @@ module Jwt
     def call
       return nil unless @token && @user
 
-      user = validate_user_from_token(token: @token, user: @user)
-      return nil unless user.present?
+      user = Jwt::Validate.new(token: @token, user: @user).call
+      return nil unless user
 
       user.blacklist_tokens.create!(token: @token)
     end

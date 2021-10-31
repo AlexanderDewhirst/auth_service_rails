@@ -48,7 +48,8 @@ I have run a performance test for the sessions endpoint, `POST /api/login`, with
 ## Actions
 
 The following actions are currently supported,
-- register `POST /api`
+- validate `POST /api/validate`
+- register `POST /api/register`
 - login `POST /api/login`
 - logout `DELETE /api/logout` (may deprecate due to use-case)
 - blacklist JWT token `POST /api/blacklist`

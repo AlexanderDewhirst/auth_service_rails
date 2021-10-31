@@ -8,9 +8,14 @@ Rails.application.routes.draw do
       # omniauth_callbacks: :omniauth_callbacks,
       # confirmations: :confirmations
     }, path: '/', path_names: {
+      sign_up: :register,
       sign_in: :login,
       sign_out: :logout
     }
+
+    devise_scope :user do
+      post '/validate', to: 'sessions#validate'
+    end
 
     resource :refresh, only: [:create]
     resource :blacklist, only: [:create]

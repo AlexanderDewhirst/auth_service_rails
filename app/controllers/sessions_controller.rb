@@ -13,6 +13,16 @@ class SessionsController < Devise::SessionsController
     end
   end
 
+  def validate
+    token = get_token(request.headers)
+
+    if Jwt::Validate.new(token: token, user: current_user).call
+      head :ok
+    else
+      head :unauthorized
+    end 
+  end
+
   # DELETE /api/logout
   def destroy
     token = get_token(request.headers)

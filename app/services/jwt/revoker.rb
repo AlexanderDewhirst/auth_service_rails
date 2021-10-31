@@ -10,8 +10,8 @@ module Jwt
 
       @user.refresh_tokens.destroy_all
 
-      user = validate_user_from_token(token: @token, user: @user) 
-      return nil unless user.present?
+      user = Jwt::Validate.new(token: @token, user: @user).call
+      return nil unless user
 
       Jwt::Blacklister.new(token: @token, user: user).call
     end

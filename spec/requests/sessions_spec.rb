@@ -27,6 +27,27 @@ RSpec.describe "Sessions", type: :request do
     end
   end
 
+  describe "POST /api/validate" do
+    let(:token) { nil }
+
+    context "with valid user" do
+      let(:user) { FactoryBot.create(:user) }
+
+      context "with valid JWT token" do
+        let(:req) { { "HTTP_HOST": "localhost:3000", "REQUEST_URL": "/api/validate" } }
+        let(:user_jwts) { Jwt::Generator.new(user: user, req: req).call }
+
+        before do
+          post validate_path, headers: { "Authorization" => "Bearer " + user_jwts[0] }
+        end
+
+        it "returns a 200 response" do
+          expect(response).to have_http_status :ok
+        end
+      end
+    end
+  end
+
   describe "DELETE /api/logout" do
     let(:token) { nil }
 
@@ -34,12 +55,14 @@ RSpec.describe "Sessions", type: :request do
       let(:user) { FactoryBot.create(:user) }
 
       context "with valid JWT token" do
-        let(:req) { {"HTTP_HOST": "localhost:3000", "REQUEST_URI": "/api"} }
+        let(:req) { {"HTTP_HOST": "localhost:3000", "REQUEST_URI": "/api/sign_out"} }
         let(:user_jwts) { Jwt::Generator.new(user: user, req: req).call }
 
-        it "logs the user out" do
+        before do
           delete destroy_user_session_path, headers: { "Authorization" => "Bearer " + user_jwts[0] }
+        end
 
+        it "logs the user out" do
           expect(response).to have_http_status(:ok)
         end
       end
